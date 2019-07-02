@@ -1,6 +1,8 @@
 from django.contrib import admin
 from .models import *
 
+
+#django自带的强大后台管理
 # Register your models here.
 
 class HeroInfoIine(admin.StackedInline):

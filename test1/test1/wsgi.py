@@ -1,6 +1,9 @@
 """
 WSGI config for test1 project.
 
+项目发布需要使用到WSGI协议
+django已经实现该协议
+
 It exposes the WSGI callable as a module-level variable named ``application``.
 
 For more information on this file, see

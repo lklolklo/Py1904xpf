@@ -1,5 +1,5 @@
 from django.db import models
-#mvt 中的m 数据模型
+#mvt 中的m 数据模型 用于和数据库交互
 #orm对象
 # Create your models here.
 

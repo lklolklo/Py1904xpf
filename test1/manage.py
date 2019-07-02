@@ -19,3 +19,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+#项目入口文件
+#mange.py为django提供的命令行管理工具

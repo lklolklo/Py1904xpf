@@ -8,12 +8,18 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
+
+项目配置文件
+经常会配置常量格式
+其中的常量各式为固定，不可随意更改
+
 """
 
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#为项目文件夹的根路径
 
 
 # Quick-start development settings - unsuitable for production
@@ -21,15 +27,22 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '27)$!&@!omyuk#1k$u@ry$yg!c^*zz8upxqz@6aw6+x67yt6#4'
+#用于加密使用
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+#默认开启调试模式，能够看到错误输出
+#项目上线之后需要关闭
+
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
+
+#注册的应用
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,7 +63,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
+#项目根路由
 ROOT_URLCONF = 'test1.urls'
+
+
+
 
 TEMPLATES = [
     {
@@ -74,6 +93,8 @@ WSGI_APPLICATION = 'test1.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+
+#数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
