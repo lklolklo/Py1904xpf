@@ -6,7 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^first/$',views.first),
-    url(r'^seccend/$',views.seccend),
-    url(r'^third/$',views.third)
+    url(r'^$',views.index),
+    url(r'^list/$',views.list),
+    url(r'^detail/(\d+)/$',views.detail)
 ]

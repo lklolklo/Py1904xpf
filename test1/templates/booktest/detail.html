@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>detali</title>
+</head>
+<body>
+    <h2>详细</h2>
+    <h3>当前书籍为：{{book.title}}</h3>
+
+    {% if book.heroinfo_set.count %}
+        <h3>拥有角色</h3>
+        <ul>
+            {% for hero in book.heroinfo_set.all %}
+                <li>{{hero.name}}-{{hero.content}}</li>
+            {% endfor %}
+        </ul>
+
+    {% else %}
+        <h3>没有角色</h3>
+    {% endif %}
+
+
+
+
+    <a href="/">首页</a>
+    <a href="/list/">商品列表</a>
+
+
+
+</body>
+</html>
