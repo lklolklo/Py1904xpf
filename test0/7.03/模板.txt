@@ -1,0 +1,22 @@
+1.加载模板的流程
+	首先确保模板在项目根目录下template文
+	件夹下
+	1.然后先取得模板from django.template import loader
+	temp = loader.get_template("模板在根目录下的位置和名字")
+	2.使用模板渲染字典参数
+	result = temp.render({})
+	没有参数可先使用空字典
+	3.将渲染的结果返回
+	return HttpResponse(result)
+2.如何给模板传递参数
+	先在方法中取得模板所需要的数据
+	之后再result中以字典的形式进行返回
+	在模板中用{{}}来接收
+3.在模板中如何编写页面跳转
+	通过a标签来编写路由，如果有参数需要
+	用正则来分组
+4.在模板中如何编写页面跳转
+	引入render
+	from django.shortcuts import render
+	方法中获取了必要的数据后可直接返回
+	return render(形参request,"模板名字",{参数字典})
