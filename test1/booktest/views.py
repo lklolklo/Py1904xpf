@@ -57,6 +57,48 @@ def detail(request,id):
     book = BookInfo.objects.get(pk=id)
     return render(request,"booktest/detail.html",{"book":book})
 
+
+def addb(request):
+    # return HttpResponse("书籍添加成功")
+    if request.method == "GET":
+        return render(request,"booktest/addb.html")
+    elif request.method == "POST":
+        title = request.POST.get("title")
+        book = BookInfo()
+        book.title = title
+        book.save()
+        return redirect(reverse("booktest:list"))
+
+
+def delb(request,id):
+    book = BookInfo.objects.get(pk=id)
+    book.delete()
+
+    return redirect(reverse("booktest:list"))
+    # return HttpResponse("删除成功")
+
+
+def addh(request,id):
+    # return HttpResponse("ok")
+    book = BookInfo.objects.get(pk=id)
+
+    if request.method == "GET":
+        return render(request,"booktest/addh.html",{"book":book})
+    elif request.method == "POST":
+        name = request.POST.get("username")
+        content = request.POST.get("content")
+        gender = request.POST.get("gender")
+        hero = HeroInfo()
+        hero.name = name
+        hero.content = content
+        hero.gender = gender
+        hero.book = book
+        hero.save()
+        return redirect(reverse("booktest:detail",args=(id,)))
+
+
+
+
 def delt(request,id):
     hero = HeroInfo.objects.get(pk=id)
     bookid = hero.book.id

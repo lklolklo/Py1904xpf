@@ -10,10 +10,13 @@
     <ul>
         {% for book in books %}
             {# <li><a href="/detail/{{book.id}}/">{{book.title}}--{{ book.pub_date }}</a></li> #}
-            <li><a href="{% url 'booktest:detail' book.id %}">{{book.title}}--{{ book.pub_date }}</a></li>
+            <li><a href="{% url 'booktest:detail' book.id %}">{{book.title}}--{{ book.pub_date }}</a><a href="{% url 'booktest:delb' book.id %}">删除</a></li>
         {% endfor %}
 
     </ul>
+
+    <a href="{% url 'booktest:addb' %}">添加书籍</a>
+
     {# <a href="/">首页</a> #}
     <a href="{% url 'booktest:index' %}">首页</a>
 
