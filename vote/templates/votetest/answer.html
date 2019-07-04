@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项</title>
+</head>
+<body>
+    <h2>输入你的选择</h2>
+    <h2>题目：{{ ques.question }}</h2>
+    <ul>
+
+        <li><a href="{% url 'votetest:result' ques.id %}">{{ques.question}}</a></li>
+
+
+    </ul>
+</body>
+</html>
