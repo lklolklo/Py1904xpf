@@ -1,11 +1,12 @@
-from django.shortcuts import render
+#引入简写模块分别是  响应简写，重定向简写，解除硬编码
+from django.shortcuts import render,redirect,reverse
 
 #获取模板的引入
 from django.template import loader
 
 
-#编写响应
-from django.http import HttpResponse
+#编写响应,重定向
+from django.http import HttpResponse,HttpResponseRedirect
 # Create your views here.
 
 
@@ -55,3 +56,12 @@ def detail(request,id):
     # return HttpResponse(resut3)
     book = BookInfo.objects.get(pk=id)
     return render(request,"booktest/detail.html",{"book":book})
+
+def delt(request,id):
+    hero = HeroInfo.objects.get(pk=id)
+    bookid = hero.book.id
+    hero.delete()
+    # return HttpResponse("删除成功")
+    # return HttpResponseRedirect("/detail/%s/"%(bookid,))
+    result = reverse("booktest:detail",args=(bookid,))
+    return redirect(result)

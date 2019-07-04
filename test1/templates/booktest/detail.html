@@ -12,7 +12,7 @@
         <h3>拥有角色</h3>
         <ul>
             {% for hero in book.heroinfo_set.all %}
-                <li>{{hero.name}}-{{hero.content}}</li>
+                <li>{{hero.name}}-{{hero.content}}<a href="{% url 'booktest:delt' hero.id %}">删除</a></li>
             {% endfor %}
         </ul>
 
@@ -23,9 +23,13 @@
 
 
 
-    <a href="/">首页</a>
-    <a href="/list/">商品列表</a>
+    {# <a href="/">首页</a> #}
 
+    <a href="{% url 'booktest:index' %}">首页</a>
+
+    {# <a href="/list/">商品列表</a> #}
+
+    <a href="{% url 'booktest:list' %}">商品列表</a>
 
 
 </body>
