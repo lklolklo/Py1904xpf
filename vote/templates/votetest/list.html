@@ -9,7 +9,7 @@
 
     <ul>
         {% for ques in question %}
-            <li><a href="{% url 'votetest:answer' ques.id %}">{{ques.question}}</a></li>
+            <li>{{ forloop.counter }}--<a href="{% url 'votetest:answer' ques.id %}">{{ques.question}}</a></li>
         {% endfor %}
 
     </ul>
