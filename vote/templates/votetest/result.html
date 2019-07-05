@@ -5,6 +5,27 @@
     <title>统计</title>
 </head>
 <body>
+    <ul>
+        <h2>{{ ques.question }}</h2>
+        <li>{{ forloop.counter }}--{{ques.option1}}得票:{{ count.opt1 }}</li>
+        <li>{{ forloop.counter }}--{{ques.option2}}得票:{{ count.opt2 }}</li>
+
+        {% if ques.option3 != "None" %}
+            <li>{{ forloop.counter }}--{{ques.option3}}得票:{{ count.opt3 }}</li>
+        {% else %}
+            <li hidden>{{ forloop.counter }}--{{ques.option3}}得票:{{ count.opt3 }}</li>
+        {% endif %}
+
+        {% if ques.option4 != "None" %}
+            <li>{{ forloop.counter }}--{{ques.option4}}得票:{{ count.opt4 }}</li>
+        {% else %}
+            <li hidden>{{ forloop.counter }}--{{ques.option4}}得票:{{ count.opt4 }}</li>
+        {% endif %}
+
+
+    </ul>
+
+    <a href="{% url 'votetest:list' %}">首页</a>
 
 </body>
 </html>

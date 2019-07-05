@@ -6,6 +6,6 @@ app_name = "votetest"
 
 urlpatterns = [
     url(r'^$',views.list,name="list"),
-    url(r'^answer/$',views.answer,name="answer"),
-    url(r'^result/$',views.result,name="result"),
+    url(r'^answer/(\d+)/$',views.answer,name="answer"),
+    url(r'^result/(\d+)/$',views.result,name="result"),
 ]
