@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>问题列表</title>
+</head>
+<body>
+    <div class="container">
+        <h2>问题列表</h2>
+        {% if question %}
+            <ul>
+                {% for q in question %}
+                    <li>{{ q.desc }}</li>
+                {% empty %}
+                    <li>问题为空</li>
+                {% endfor %}
+             </ul>
+        {% else %}
+            <li>没有问题</li>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
