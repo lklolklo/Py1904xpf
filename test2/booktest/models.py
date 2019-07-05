@@ -18,3 +18,24 @@ class Hero(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+#一对一
+class Account(models.Model):
+    account = models.CharField(max_length=10)
+
+
+class Phone(models.Model):
+    phone = models.CharField(max_length=11)
+    p_id = models.OneToOneField(Account,on_delete=models.CASCADE)
+
+
+#多对多
+class City(models.Model):
+    city = models.CharField(max_length=5)
+
+class App(models.Model):
+    app = models.CharField(max_length=10)
+    h = models.ManyToManyField(to="City")
+
