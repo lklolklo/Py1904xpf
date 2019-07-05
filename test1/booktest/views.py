@@ -12,7 +12,7 @@ from django.http import HttpResponse,HttpResponseRedirect
 
 
 #引入模板
-from .models import BookInfo,HeroInfo
+from .models import *
 
 
 #MVT 中核心V视图
@@ -88,12 +88,13 @@ def addh(request,id):
         name = request.POST.get("username")
         content = request.POST.get("content")
         gender = request.POST.get("gender")
-        hero = HeroInfo()
-        hero.name = name
-        hero.content = content
-        hero.gender = gender
-        hero.book = book
-        hero.save()
+        HeroInfo.objects.addhero(name,content,gender,book)
+        # hero = HeroInfo()
+        # hero.name = name
+        # hero.content = content
+        # hero.gender = gender
+        # hero.book = book
+        # hero.save()
         return redirect(reverse("booktest:detail",args=(id,)))
 
 
