@@ -10,10 +10,17 @@ class Question(models.Model):
     def __str__(self):
         return self.desc
 
+class ChoiceManager(models.Manager):
+    def addvote(self,id):
+        c = self.get(pk=1)
+        c.votes += 1
+        c.save()
+
 class Choice(models.Model):
     desc = models.CharField(max_length=20)
     votes = models.IntegerField(default=0)
     question = models.ForeignKey(Question,on_delete=models.CASCADE)
+    objects = ChoiceManager()
 
     def __str__(self):
         return self.desc
