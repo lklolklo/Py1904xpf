@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加角色</title>
+</head>
+<body>
+    <h2>当前书籍：{{ book.title }}</h2>
+    <h2>添加角色</h2>
+    <form action="{% url 'booktest:addhero' book.id %}" method="post" >
+        角色姓名：<input type="text" name="heroname"><br>
+        角色性别：
+                男：<input type="radio" name="gender" value="man" checked>
+                女：<input type="radio" name="gender" value="women"><br>
+
+        角色招式：<input type="text" name="content"><br>
+        <input type="submit" value="添加">
+    </form>
+</body>
+</html>

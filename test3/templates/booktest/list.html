@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>书籍列表</title>
+</head>
+<body>
+    <h2>书籍清单</h2>
+    {% if books %}
+        <ul>
+            {% for book in books %}
+                <li><a href="{% url 'booktest:detail' book.id %}">{{ book.title }}</a>--{{ book.pud_date }}<a href="{% url 'booktest:delbook' book.id %}">删除书籍</a></li>
+            {% empty %}
+                <li>书籍为空</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <li>没有书籍</li>
+    {% endif %}
+
+    <a href="{% url 'booktest:addbook' %}">添加书籍</a>
+
+    <a href="{% url 'booktest:index' %}">返回首页</a>
+</body>
+</html>
