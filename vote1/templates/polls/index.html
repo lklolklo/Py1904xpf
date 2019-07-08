@@ -13,16 +13,16 @@
 </head>
 <body>
     <div class="container">
-        {% if username %}
-            当前用户：{{ username }}--<a href="{% url 'polls:logout' %}">退出登录</a>
+        {% if request.user and request.user.is_authenticated %}
+            当前用户：{{ request.user }}--<a href="{% url 'polls:logout' %}">退出登录</a>
         {% else %}
             未登录
         {% endif %}
 
         <h2>问题列表</h2>
-        {% if question %}
+        {% if questions %}
             <ul>
-                {% for q in question %}
+                {% for q in questions %}
                     <li><a href="{% url 'polls:detail' q.id %}">{{ forloop.counter }}--{{ q.desc }}</a></li>
                 {% empty %}
                     <li>问题为空</li>
