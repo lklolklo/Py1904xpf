@@ -31,3 +31,8 @@ class Hero(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Ads(models.Model):
+    desc = models.CharField(max_length=20)
+    img = models.ImageField(upload_to="ads")

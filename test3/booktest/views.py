@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponse
 # Create your views here.
 from .models import *
+from django.views.generic import View
 
 def index(request):
-    return render(request,"booktest/index.html",{"username":"lklo"})
+    return render(request,"booktest/index.html",{"username":"lklo","ads":Ads.objects.all()})
 
 def list(request):
     book = Book.objects.all()
@@ -54,3 +55,14 @@ def delhero(request,id):
     bookid = hero.book.id
     hero.delete()
     return redirect(reverse("booktest:detail",args=(bookid,)))
+
+
+class UploadAdsView(View):
+    def get(self,request):
+        return render(request,"booktest/uploadads.html")
+    def post(self,request):
+        ads = Ads()
+        ads.desc = request.POST.get("desc")
+        ads.img = request.FILES["uploadimg"]
+        ads.save()
+        return HttpResponse("上传成功")

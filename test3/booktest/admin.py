@@ -17,3 +17,5 @@ class HeroAdmin(admin.ModelAdmin):
 
 admin.site.register(Book,BookAdmin)
 admin.site.register(Hero,HeroAdmin)
+
+admin.site.register(Ads)
