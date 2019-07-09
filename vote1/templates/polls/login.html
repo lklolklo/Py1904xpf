@@ -29,13 +29,14 @@
                 <h2>登录</h2>
 
                 <form method="post" action="{% url 'polls:login' %}">
+                    {% csrf_token %}
                     <div class="form-group">
                         <label for="username">用户名</label>
-                        <input type="text" class="form-control" id="username" placeholder="输入用户名" name="username">
+                        {{ lgf.username }}
                     </div>
                     <div class="form-group">
                         <label for="password">密码</label>
-                        <input type="password" class="form-control" id="password" placeholder="输入密码" name="password">
+                        {{ lgf.password }}
                     </div>
 
                     <button type="submit" class="btn btn-default">登录</button>

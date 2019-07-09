@@ -3,7 +3,7 @@ from .models import *
 from django.http import *
 # Create your views here.
 from django.contrib.auth import login as lgi ,logout as lgo,authenticate
-
+from .forms import *
 def checklogin(fun):
     def check(request,*args):
         # username = request.COOKIES.get("username")
@@ -61,7 +61,9 @@ def result(request,id):
 
 def login(request):
     if request.method == "GET":
-        return render(request,"polls/login.html")
+        lgf = LoginForm()
+        # print(lgf)
+        return render(request,"polls/login.html",{"lgf":lgf})
     else:
         #使用cookies
         # response = redirect(reverse("polls:index"))
@@ -71,8 +73,12 @@ def login(request):
         # request.session["username"] = request.POST.get("username")
         # return redirect(reverse("polls:index"))
         #3
-        username = request.POST.get("username")
-        password = request.POST.get("password")
+        # username = request.POST.get("username")
+        # password = request.POST.get("password")
+        lgf = LoginForm(request.POST)
+        if lgf.is_valid():
+            username = lgf.cleaned_data["username"]
+            password = lgf.cleaned_data["password"]
         user = authenticate(request,username = username,password=password)
         if user:
             lgi(request,user)
