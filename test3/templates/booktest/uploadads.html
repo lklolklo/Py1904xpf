@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends 'booktest/base.html' %}
+{% block a %}
     <title>添加轮播图</title>
-</head>
-<body>
+{% endblock %}
 
+{% block con %}
     <h2>添加图</h2>
     <form enctype="multipart/form-data" action="{% url 'booktest:uploadads' %}" method="post" >
         说明<input type="text" name="desc"><br>
         图片<input type="file" name="uploadimg"><br>
         <input type="submit" value="添加">
     </form>
-</body>
-</html>
+
+{% endblock %}
+
