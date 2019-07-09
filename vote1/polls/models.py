@@ -26,4 +26,4 @@ class Choice(models.Model):
         return self.desc
 
 class PollsUser(User):
-    telephone = models.CharField(max_length=11)
+    telepone = models.CharField(max_length=11)

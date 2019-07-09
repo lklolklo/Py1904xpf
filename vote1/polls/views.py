@@ -59,34 +59,54 @@ def result(request,id):
     return render(request,"polls/result.html",locals())
 
 
+# def login(request):
+#     if request.method == "GET":
+#         lgf = LoginForm()
+#         # print(lgf)
+#         return render(request,"polls/login.html",{"lgf":lgf})
+#     else:
+#         #使用cookies
+#         # response = redirect(reverse("polls:index"))
+#         # response.set_cookie("username",request.POST.get("username"))
+#         # return response
+#         #使用session
+#         # request.session["username"] = request.POST.get("username")
+#         # return redirect(reverse("polls:index"))
+#         #3
+#         # username = request.POST.get("username")
+#         # password = request.POST.get("password")
+#         lgf = LoginForm(request.POST)
+#         if lgf.is_valid():
+#             username = lgf.cleaned_data["username"]
+#             password = lgf.cleaned_data["password"]
+#         user = authenticate(request,username = username,password=password)
+#         if user:
+#             lgi(request,user)
+#             return redirect(reverse("polls:index"))
+#         else:
+#             return render(request, 'polls/login.html', {"errors": "登录失败"})
+
 def login(request):
+    lgf = LoginForm()
+    rgf = RegistForm()
     if request.method == "GET":
-        lgf = LoginForm()
-        # print(lgf)
-        return render(request,"polls/login.html",{"lgf":lgf})
-    else:
-        #使用cookies
-        # response = redirect(reverse("polls:index"))
-        # response.set_cookie("username",request.POST.get("username"))
-        # return response
-        #使用session
-        # request.session["username"] = request.POST.get("username")
-        # return redirect(reverse("polls:index"))
-        #3
+        return render(request,'polls/login.html',{"lgf":lgf,"rgf":rgf})
+    elif request.method == "POST":
         # username = request.POST.get("username")
         # password = request.POST.get("password")
+
         lgf = LoginForm(request.POST)
         if lgf.is_valid():
             username = lgf.cleaned_data["username"]
             password = lgf.cleaned_data["password"]
-        user = authenticate(request,username = username,password=password)
-        if user:
-            lgi(request,user)
-            return redirect(reverse("polls:index"))
+            user = authenticate(request,username = username,password=password)
+            if user:
+                lgi(request,user)
+                return redirect(reverse("polls:index"))
+            else:
+                return render(request, 'polls/login.html', {"errors": "登录失败","lgf":lgf,"rgf":rgf})
         else:
-            return render(request, 'polls/login.html', {"errors": "登录失败"})
-
-
+            return render(request, 'polls/login.html', {"errors": "登录失败","lgf":lgf,"rgf":rgf})
 
 def logout(request):
     #1
@@ -99,16 +119,48 @@ def logout(request):
     lgo(request)
     return redirect(reverse("polls:login"))
 
+# def regist(request):
+#     if request.method == "POST":
+#         username = request.POST.get("username")
+#         password = request.POST.get("password")
+#
+#         try:
+#             user = PollsUser.objects.create_user(username=username,password=password)
+#         except:
+#             user = None
+#
+#         if user:
+#             return redirect(reverse("polls:login"))
+#         else:
+#             return render(request,"polls/login/html",{"errors":"注册失败"})
 def regist(request):
     if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        try:
-            user = PollsUser.objects.create_user(username=username,password=password)
-        except:
-            user = None
-
-        if user:
+        rgf = RegistForm(request.POST)
+        if rgf.is_valid():
+            # 先返回一个user 此时没有保存数据库应为密码还没有加密
+            user = rgf.save(commit=False)
+            # 对user用户设置密码 加密过得密码
+            user.set_password(rgf.cleaned_data["password"])
+            # 保存数据库
+            user.save()
             return redirect(reverse("polls:login"))
         else:
-            return render(request,"polls/login/html",{"errors":"注册失败"})
+            lgf = LoginForm()
+            rgf = RegistForm()
+            return render(request, 'polls/login.html', {"errors": "注册失败","lgf":lgf,"rgf":rgf})
+
+        # username =request.POST.get("username")
+        # password = request.POST.get("password")
+        #
+        # try:
+        #     user = PollsUser.objects.create_user(username=username, password=password)
+        # except:
+        #     user = None
+        #
+        # if user:
+        #     return redirect(reverse("polls:login"))
+        # else:
+        #     return render(request, 'polls/login.html', {"errors":"注册失败"})
+
+    else:
+        return HttpResponse("错误")
