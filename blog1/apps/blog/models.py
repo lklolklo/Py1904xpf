@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from DjangoUeditor.models import UEditorField
 # Create your models here.
 
 class Ads(models.Model):
@@ -10,10 +11,16 @@ class Ads(models.Model):
 
 class Category(models.Model):
     title = models.CharField(max_length=20)
+    def __str__(self):
+        return self.title
 
 
 class Tag(models.Model):
     title = models.CharField(max_length=10)
+    def __str__(self):
+        return self.title
+
+
 
 class Article(models.Model):
     title = models.CharField(max_length=20)
@@ -22,5 +29,9 @@ class Article(models.Model):
     update_time = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User,on_delete=models.CASCADE)
     view = models.IntegerField(default=0)
-    body = models.TextField()
+    # body = models.TextField()
+    body = UEditorField(imagePath="articleimg/",width="100%")
     tags = models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.title
