@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "blog",
-    "comment"
+    "comment",
+    "xadmin",
+    "crispy_forms"
 ]
 
 MIDDLEWARE = [
