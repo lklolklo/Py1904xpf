@@ -79,7 +79,7 @@
                         {% getlatestarticles as latestarticles %}
                         {% for a in latestarticles %}
                         <li>
-                            <a href="#">{{ a.title }}</a>
+                            <a href="{% url 'blog:single' a.id %}">{{ a.title }}</a>
                         </li>
                         {% endfor %}
 
@@ -88,68 +88,46 @@
                 <div class="widget widget-archives">
                     <h3 class="widget-title">归档</h3>
                     <ul>
+                        {% gettimes as times %}
+                        {% for t in times %}
                         <li>
-                            <a href="#">2017 年 5 月</a>
+                            <a href="{% url 'blog:archives' t.year t.month %}">{{t.year}} 年 {{t.month}} 月</a>
                         </li>
-                        <li>
-                            <a href="#">2017 年 4 月</a>
-                        </li>
-                        <li>
-                            <a href="#">2017 年 3 月</a>
-                        </li>
+                        {% endfor %}
+
+
                     </ul>
                 </div>
 
                 <div class="widget widget-category">
                     <h3 class="widget-title">分类</h3>
                     <ul>
+                        {% getcategorys as categorys %}
+                        {% for o in categorys %}
                         <li>
-                            <a href="#">Django 博客教程 <span class="post-count">(13)</span></a>
+                            <a href="{% url 'blog:categorys' o.id %}">{{o.title}}<span class="post-count">({{o.article_set.count}})</span></a>
                         </li>
-                        <li>
-                            <a href="#">Python 教程 <span class="post-count">(11)</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Django 用户认证 <span class="post-count">(8)</span></a>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <div class="widget widget-tag-cloud">
                     <h3 class="widget-title">标签云</h3>
                     <ul>
+                        {% gettags as tags %}
+                        {% for o in tags %}
                         <li>
-                            <a href="#">Django</a>
+                            <a href="{% url 'blog:tags' o.id %}">{{ o.title }}</a>
                         </li>
-                        <li>
-                            <a href="#">Python</a>
-                        </li>
-                        <li>
-                            <a href="#">Java</a>
-                        </li>
-                        <li>
-                            <a href="#">笔记</a>
-                        </li>
-                        <li>
-                            <a href="#">文档</a>
-                        </li>
-                        <li>
-                            <a href="#">AngularJS</a>
-                        </li>
-                        <li>
-                            <a href="#">CSS</a>
-                        </li>
-                        <li>
-                            <a href="#">JavaScript</a>
-                        </li>
-                        <li>
-                            <a href="#">Snippet</a>
-                        </li>
-                        <li>
-                            <a href="#">jQuery</a>
-                        </li>
+                        {% endfor %}
+
                     </ul>
                 </div>
+
+
+
+
+
                 <div class="rss">
                     <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
                 </div>

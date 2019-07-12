@@ -1,10 +1,18 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.views.generic import View
 from django.http import HttpResponse
 from .models import *
-from .forms import ArticleForm
+from .forms import ArticleForm,CommentForm
 from django.core.paginator import Paginator,Page
 # Create your views here.
+
+
+def getpage(request,object_list,per_num):
+    pagenum = request.GET.get("page")
+    pagenum = 1 if not pagenum else pagenum
+    page = Paginator(object_list, per_num).get_page(pagenum)
+    return page
+
 
 
 class IndexView(View):
@@ -25,18 +33,29 @@ class IndexView(View):
         # print(page.previous_page_number())
         # print(page.has_next())
         # print(page.has_previous())
-        pagenum = request.GET.get("page")
-        pagenum = 1 if not pagenum else pagenum
-        page = Paginator(articles,1).get_page(pagenum)
+
+        # pagenum = request.GET.get("page")
+        # pagenum = 1 if not pagenum else pagenum
+        # page = Paginator(articles,1).get_page(pagenum)
+        page = getpage(request, articles, 1)
         return render(request,"blog/index.html",locals())
 
 
 class SingleView(View):
     def get(self,request,id):
-        article = Article.objects.all()
-        return render(request,"blog/single.html")
+        # article = Article.objects.all()
+        article = get_object_or_404(Article,pk=id)
+        article.view += 1
+        article.save()
+        cf = CommentForm()
+        return render(request,"blog/single.html",locals())
     def post(self,request,id):
-        return render(request,"blog.single.html")
+        article = get_object_or_404(Article,pk=id)
+        cf = CommentForm(request.POST)
+        comment = cf.save(commit=False)
+        comment.article = article
+        comment.save()
+        return redirect(reverse("blog:single",args=(article.id,)))
 
 class AddArticleView(View):
     def get(self,request):
@@ -50,4 +69,27 @@ class AddArticleView(View):
             article.author = User.objects.first()
             article.save()
             return redirect(reverse("blog:index"))
-        return HttpResponse("ok")
+        return HttpResponse("添加失败")
+
+class ArchivesView(View):
+    def get(self,request,year,month):
+        ads = Ads.objects.all()
+        articles = Article.objects.filter(create_time__year=year, create_time__month=month)
+        page = getpage(request, articles, 1)
+        return render(request,"blog/index.html",locals())
+
+class CategorysView(View):
+    def get(self, request, id):
+        ads = Ads.objects.all()
+        category = get_object_or_404(Category, pk=id)
+        articles = category.article_set.all()
+        page = getpage(request, articles, 1)
+        return render(request, 'blog/index.html',locals())
+
+class TagsView(View):
+    def get(self, request, id):
+        ads = Ads.objects.all()
+        tag = get_object_or_404(Tag, pk=id)
+        articles = tag.article_set.all()
+        page = getpage(request, articles, 1)
+        return render(request, 'blog/index.html', locals())

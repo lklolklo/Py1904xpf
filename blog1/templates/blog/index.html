@@ -1,4 +1,7 @@
 {% extends 'blog/base.html' %}
+
+{% load my_func %}
+
 {% block title %}
 <title>首页</title>
 {% endblock %}
@@ -50,6 +53,10 @@
         <span class="sr-only">Next</span>
     </a>
 </div>
+<br><br>
+{{ name|default:"HELLO"|mylower|join:"+" }}<br>
+{{ name|default:"HELLO"|mylower|myjoin:"+" }}
+
 
 {% for article in page.object_list %}
 <article class="post post-{{ article.id }}">
@@ -67,13 +74,16 @@
         </div>
     </header>
     <div class="entry-content clearfix">
-        {{article.body|safe}}
+        <p>{{ article.body|safe|truncatechars_html:100 }}</p>
+        <!--{{article.body|safe}}-->
         <div class="read-more cl-effect-14">
             <a href="#" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
         </div>
     </div>
 </article>
 {% endfor %}
+
+
 
 <!-- 简单分页效果
 <div class="pagination-simple">
@@ -85,14 +95,14 @@
 <div class="pagination col-md-11">
     <ul>
         {% if page.has_previous %}
-        <li class="col-md-2"><a href="/?page={{ page.previous_page_number }}">上一页</a></li>
+        <li class="col-md-2"><a href="?page={{ page.previous_page_number }}">上一页</a></li>
         {% endif %}
 
         {% for i in page.paginator.page_range %}
             {% if i == page.number %}
-            <li class="current col-md-1"><a href="/?page={{i}}">{{ i }}</a></li>
+            <li class="current col-md-1"><a href="?page={{i}}">{{ i }}</a></li>
             {% else %}
-            <li class="col-md-1"><a href="/?page={{i}}">{{ i }}</a></li>
+            <li class="col-md-1"><a href="?page={{i}}">{{ i }}</a></li>
             {% endif %}
         {% endfor %}
 
@@ -107,7 +117,7 @@
         {% endcomment %}
 
         {% if page.has_next %}
-        <li class="col-md-2"><a href="/?page={{ page.next_page_number }}">下一页</a></li>
+        <li class="col-md-2"><a href="?page={{ page.next_page_number }}">下一页</a></li>
         {% endif %}
     </ul>
 </div>
