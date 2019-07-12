@@ -47,9 +47,15 @@ INSTALLED_APPS = [
     "xadmin",
     "crispy_forms",
     "DjangoUeditor",
+    "haystack",
 ]
 
+#中间件，自带特定功能，没一个请求均需要通过中间件
+#中间件可以改写请求和响应
+
 MIDDLEWARE = [
+    #UpdateCacheMiddleware必须作为第一个（缓存整个网页）
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,6 +63,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware'
+    #FetchFromCacheMiddleware必须作为最后一个
 ]
 
 ROOT_URLCONF = 'blog1.urls'
@@ -133,3 +141,24 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,"static")]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,"media")
 MEDIAFILES_DIRS = [os.path.join(BASE_DIR,'media')]
+
+#配置分词
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+CACHES = {
+    "default": {
+        "BACKEND": "redis_cache.cache.RedisCache",
+        "LOCATION": "localhost:6379",
+        'TIMEOUT': 60,
+    },
+}

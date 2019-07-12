@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from .models import *
 from .forms import ArticleForm,CommentForm
 from django.core.paginator import Paginator,Page
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 # Create your views here.
 
 
@@ -13,6 +15,14 @@ def getpage(request,object_list,per_num):
     page = Paginator(object_list, per_num).get_page(pagenum)
     return page
 
+
+
+@cache_page(timeout=60)
+def index(request):
+    ads = Ads.objects.all()
+    articles = Article.objects.all()
+    page = getpage(request, articles, 1)
+    return render(request, "blog/index.html", locals())
 
 
 class IndexView(View):
