@@ -17,7 +17,7 @@ def getpage(request,object_list,per_num):
 
 
 
-@cache_page(timeout=60)
+# @cache_page(timeout=60)
 def index(request):
     ads = Ads.objects.all()
     articles = Article.objects.all()
