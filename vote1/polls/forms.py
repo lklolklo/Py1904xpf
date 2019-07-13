@@ -8,12 +8,13 @@ class RegistForm(forms.ModelForm):
     repeatpassword = forms.CharField(label="重复密码",required=True,widget=forms.PasswordInput(attrs={"class":"form-control","id":"registpassword2", "placeholder":"输入确认密码"}))
     class Meta:
         model = PollsUser
-        fields = ["username","password","telepone",]
+        fields = ["username","password","telepone","email"]
         widgets = {
             "username":forms.TextInput(attrs={"id":"registusername","placeholder":"输入用户名","class":"form-control" }),
             "password":forms.PasswordInput(attrs={"class":"form-control","id":"registpassword", "placeholder":"输入密码"}),
             "telepone": forms.TextInput(
                 attrs={"class": "form-control", "id": "telepone", "placeholder": "输入手机号"}),
+            "email":forms.EmailInput(attrs={"class": "form-control", "id": "email", "placeholder": "输入邮箱"})
         }
         help_texts = {
             "username":"",

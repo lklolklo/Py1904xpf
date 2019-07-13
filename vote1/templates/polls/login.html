@@ -108,6 +108,11 @@
                         {% endcomment %}
                     </div>
 
+                    <div class="form-group">
+                        <label for="verify">验证码</label>
+                        <img id="verifyimg" src="{% url 'polls:verify' %}" alt="" height="35"><input type="text" id="verify" name="verify" placeholder="请输入验证码">
+                    </div>
+
                     <button type="submit" class="btn btn-default">登录</button>
                 </form>
             </div>
@@ -143,6 +148,33 @@
 
 
 </div>
+
+<script>
+    $(function(){
+        $("#username").blur(function(){
+        console.log("输入了用户名",$(this).val());
+            $.ajax({
+                "url":"{% url 'polls:checkuser' %}",
+                "type":"get",
+                "data":{
+                "name":$(this).val()
+                },
+                success:function(data){
+                    if(data.state == 0)
+                    {
+                        alert( data.errorinfo )
+                    }
+                }
+            })
+        })
+
+
+        $("#verifyimg").click(function(){
+            $(this).attr("src","/verify/?t="+ new Date().getTime())
+        })
+
+    })
+</script>
 
 </body>
 </html>
