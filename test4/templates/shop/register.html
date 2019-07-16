@@ -1,0 +1,41 @@
+﻿{% extends 'shop/base.html' %}
+
+
+{% block title %}
+<title>注册</title>
+{% endblock %}
+
+{% block left %}
+
+
+      <div class="ogami-breadcrumb">
+        <div class="container">
+          <ul>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:index' %}"> <i class="fas fa-home"></i>Home</a></li>
+            <li> <a class="breadcrumb-link active" href="#">Register</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End breadcrumb-->
+      <div class="account">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6 mx-auto">
+              <h1 class="title">用户注册</h1>
+
+                {{ errors }}
+                <form method="post" action="{% url 'shop:register' %}">
+                    {% csrf_token %}
+                    {{ rgf }}
+                    <div class="account-function">
+                        <button class="no-round-btn">注册</button><a class="create-account" href="{% url 'shop:login' %}">去登录</a>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End account-->
+
+
+{% endblock %}

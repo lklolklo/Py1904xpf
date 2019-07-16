@@ -1,0 +1,73 @@
+﻿{% extends 'shop/base.html' %}
+
+
+{% block title %}
+<title>登录</title>
+{% endblock %}
+
+{% block left %}
+
+
+
+      <div class="ogami-breadcrumb">
+        <div class="container">
+          <ul>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:index' %}"> <i class="fas fa-home"></i>Home</a></li>
+            <li> <a class="breadcrumb-link active" href="#">Login</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End breadcrumb-->
+      <div class="account">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6 mx-auto">
+              <h1 class="title">用户登录</h1>
+
+              {{ errors }}
+              <form method="post" action="{% url 'shop:login' %}">
+                {% csrf_token %}
+                {{ lgf }}
+
+
+                <label for="verify">验证码</label>
+                <input type="text" id="verify" name="verify" class="no-round-input" placeholder="请输入验证码"><img id="verifyimg" src="{% url 'shop:verify' %}" alt="" height="35">
+                <br><br>
+
+                <div class="account-method">
+                  <div class="account-save">
+                    <input id="savepass" type="checkbox">
+                    <label for="savepass">记住密码</label>
+                  </div>
+                  <div class="account-forgot"><a href="#">忘记密码</a></div>
+                </div>
+                <div class="account-function">
+                  <button type="submit" class="no-round-btn">登录</button><a class="create-account" href="{% url 'shop:register' %}">加入我们</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End account-->
+
+
+{% endblock %}
+
+
+
+{% block sc %}
+
+<script>
+    $(function(){
+
+        $("#verifyimg").click(function(){
+            $(this).attr("src","/verify/?t="+ new Date().getTime())
+
+        })
+
+    })
+</script>
+
+
+{% endblock %}
