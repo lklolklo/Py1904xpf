@@ -9,8 +9,15 @@ from PIL import Image,ImageDraw,ImageFont
 from django.core.mail import send_mail,EmailMultiAlternatives
 from itsdangerous import TimedJSONWebSignatureSerializer
 from django.conf import settings
+from django.core.paginator import Paginator,Page
 # Create your views here.
 
+
+def getpage(request,object_list,per_num):
+    pagenum = request.GET.get("page")
+    pagenum = 1 if not  pagenum else pagenum
+    page = Paginator(object_list,per_num).get_page(pagenum)
+    return page
 
 def checklogin(fun):
     def check(request,*args):
@@ -24,16 +31,17 @@ def checklogin(fun):
 
 
 def index(request):
-    ads = Ads.objects.all()
     return render(request,"shop/index.html",locals())
 
 
 def list(request):
     foods = Foods.objects.all()
+
+    page = getpage(request,foods,3)
     return render(request,"shop/list.html",locals())
 
-def detail(request):
-    food = Foods.objects.all()
+def detail(request,id):
+    food = Foods.objects.get(pk=id)
     return render(request,"shop/detail.html",locals())
 
 def login(request):
@@ -170,3 +178,28 @@ def active(request,id):
     user.is_active=True
     user.save()
     return redirect(reverse('shop:login'))
+
+def FAQ(request):
+    return render(request,"shop/FAQ.html")
+
+
+
+def about_us(request):
+    return render(request,"shop/about_us.html")
+
+
+def colors(request,id):
+    color = get_object_or_404(Color,pk=id)
+    foods = color.foods_set.all()
+    page = getpage(request,foods,3)
+    return render(request,'shop/list.html',locals())
+
+
+def tags(request,id):
+    tag = get_object_or_404(Tag,pk=id)
+    foods = tag.foods_set.all()
+    page = getpage(request,foods,3)
+    return render(request,'shop/list.html',locals())
+
+
+

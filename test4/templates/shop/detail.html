@@ -1,5 +1,6 @@
 ﻿{% extends 'shop/base.html' %}
 
+{% load my_func %}
 
 {% block title %}
 <title>商品详细</title>
@@ -11,9 +12,9 @@
       <div class="ogami-breadcrumb">
         <div class="container">
           <ul>
-            <li> <a class="breadcrumb-link" href="index.html"> <i class="fas fa-home"></i>Home</a></li>
-            <li> <a class="breadcrumb-link" href="shop_grid+list_3col.html">Shop</a></li>
-            <li> <a class="breadcrumb-link active" href="shop_detail.html">Shop Detail Sidebar</a></li>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:index' %}"> <i class="fas fa-home"></i>Home</a></li>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:list' %}">Shop</a></li>
+            <li> <a class="breadcrumb-link active" href="#">Shop Detail Sidebar</a></li>
           </ul>
         </div>
       </div>
@@ -24,33 +25,46 @@
             <div class="col-xl-3">
               <div class="shop-sidebar">
                 <button class="no-round-btn" id="filter-sidebar--closebtn">Close sidebar</button>
-                <div class="shop-sidebar_department">
-                  <div class="department_top mini-tab-title underline">
-                    <h2 class="title">Departments</h2>
+
+
+                <div class="shop-sidebar_color-filter">
+                  <div class="color-filter_top mini-tab-title underline">
+                    <h2 class="title">Color</h2>
                   </div>
-                  <div class="department_bottom">
-                    <ul>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fresh Meat</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Vegetables</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fruit & Nut Gifts</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fresh Berries</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Ocean Foods</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Butter & Eggs</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fastfood</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fresh Onion</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Papayaya & Crisps</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Oatmeal</a></li>
-                      <li> <a class="department-link" href="shop_grid+list_3col.html">Fresh Bananas</a></li>
-                    </ul>
+                  <div class="color-filter_bottom">
+                    <div class="row">
+
+                      <div class="col-6">
+                        {% getcolor as color %}
+                        {% for c in color %}
+                        <div class="color">
+                          <div class="visible-color"></div><a href="{% url 'shop:colors' c.id %}">{{ c.title }} ({{c.foods_set.count}})</a>
+                        </div>
+                        {% endfor %}
+                      </div>
+
+                    </div>
                   </div>
                 </div>
+
                 <div class="shop-sidebar_tag">
                   <div class="tag_top mini-tab-title underline">
                     <h2 class="title">Product tag</h2>
                   </div>
-                  <div class="tag_bottom"><a class="tag-btn" href="shop_grid+list_3col.html">organic</a><a class="tag-btn" href="shop_grid+list_3col.html">vegatable</a><a class="tag-btn" href="shop_grid+list_3col.html">fruits</a><a class="tag-btn" href="shop_grid+list_3col.html">fresh meat</a><a class="tag-btn" href="shop_grid+list_3col.html">fastfood</a><a class="tag-btn" href="shop_grid+list_3col.html">natural</a></div>
+
+                  <div class="tag_bottom">
+                    {% gettag as tag %}
+                    {% for t in tag %}
+                    <a class="tag-btn" href="{% url 'shop:tags' t.id %}">{{ t.title }}</a>
+                    {% endfor %}
+
+
+                  </div>
+
                 </div>
               </div>
+
+
               <div class="filter-sidebar--background" style="display: none"></div>
             </div>
             <div class="col-xl-9">
@@ -65,40 +79,42 @@
                     <div class="shop-detail_img">
                       <button class="round-icon-btn" id="zoom-btn"> <i class="icon_zoom-in_alt"></i></button>
                       <div class="big-img">
-                        <div class="big-img_block"><img src="assets/images/shop/zoom_img_1.png" alt="product image"></div>
-                        <div class="big-img_block"><img src="assets/images/shop/zoom_img_2.png" alt="product image"></div>
-                        <div class="big-img_block"><img src="assets/images/shop/zoom_img_3.png" alt="product image"></div>
+                        <div class="big-img_block"><img src="/media/{{ food.img1 }}" alt="product image"></div>
+                        <div class="big-img_block"><img src="/media/{{ food.img2 }}" alt="product image"></div>
+                        <div class="big-img_block"><img src="/media/{{ food.img3 }}" alt="product image"></div>
                       </div>
                       <div class="slide-img">
-                        <div class="slide-img_block"><img src="assets/images/shop/zoom_img_1.png" alt="product image"></div>
-                        <div class="slide-img_block"><img src="assets/images/shop/zoom_img_2.png" alt="product image"></div>
-                        <div class="slide-img_block"><img src="assets/images/shop/zoom_img_3.png" alt="product image"></div>
+                        <div class="slide-img_block"><img src="/media/{{ food.img1 }}" alt="product image"></div>
+                        <div class="slide-img_block"><img src="/media/{{ food.img2 }}" alt="product image"></div>
+                        <div class="slide-img_block"><img src="/media/{{ food.img3 }}" alt="product image"></div>
                       </div>
                     </div>
                     <div class="img_control"></div>
                   </div>
                   <div class="col-12 col-lg-6">
                     <div class="shop-detail_info">
-                      <h5 class="product-type color-type">Oranges</h5>
-                      <h2 class="product-name">Pure Pineapple</h2>
-                      <p class="product-describe">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor </p><a class="product-more" href="#">View more <i class="arrow_carrot-2right"></i></a>
-                      <p class="delivery-status">Free delivery</p>
+                      <h5 class="product-type color-type">{{ food.tags.first }}</h5>
+                      <h2 class="product-name">{{ food.name }}</h2>
+                      <!--<p class="product-describe">{{ food.intro }}</p>-->
+                      <!--<a class="product-more" href="#">View more <i class="arrow_carrot-2right"></i></a>-->
+                      <p class="delivery-status">免费配送</p>
                       <div class="price-rate">
                         <h3 class="product-price"> 
-                          <del>$35.00</del>$14.00
+                          <del>{{ food.price1 }}</del>{{ food.price2 }}
                         </h3>
-                        <h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>
+                        <!--<h5 class="product-rated"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i><span>(15)</span></h5>-->
                       </div>
+                      <p class="product-describe">{{ food.intro }}</p>
                       <div class="color-select">
-                        <h5>Select Color:</h5><a class="color bg-danger" href="#"></a><a class="color bg-success" href="#"></a><a class="color bg-info" href="#"></a>
+                        <!--<h5>Select Color:</h5><a class="color bg-danger" href="#"></a><a class="color bg-success" href="#"></a><a class="color bg-info" href="#"></a>-->
                       </div>
                       <div class="quantity-select">
-                        <label for="quantity">Quatity:</label>
+                        <label for="quantity">数量:</label>
                         <input class="no-round-input" id="quantity" type="number" min="0" value="1">
                       </div>
                       <div class="product-select">
-                        <button class="add-to-cart normal-btn outline">Add to Cart</button>
-                        <button class="add-to-compare normal-btn outline">+ Add to Compare</button>
+                        <button class="add-to-cart normal-btn outline">添加到购物车</button>
+                        <!--<button class="add-to-compare normal-btn outline">+ Add to Compare</button>-->
                       </div>
                       <div class="product-share">
                         <h5>Share link:</h5><a href=""><i class="fab fa-facebook-f"> </i></a><a href=""><i class="fab fa-twitter"></i></a><a href=""><i class="fab fa-invision"> </i></a><a href=""><i class="fab fa-pinterest-p"></i></a>
@@ -109,21 +125,21 @@
                     <div class="shop-detail_more-info">
                       <div id="tab-so3">
                         <ul class="mb-0">
-                          <li class="active"><a href="#tab-1">DESCRIPTION</a></li>
-                          <li><a href="#tab-2">SPECIFICATIONS</a></li>
-                          <li> <a href="#tab-3">Customer Reviews (02)</a></li>
+                          <li class="active"><a href="#tab-1">真诚推荐</a></li>
+                          <li><a href="#tab-2">商品规格</a></li>
+                          <li> <a href="#tab-3">用户评论</a></li>
                         </ul>
                         <div id="tab-1">
                           <div class="description-block">
                             <div class="description-item_block">
                               <div class="row align-items-center">
                                 <div class="col-12 col-md-6">
-                                  <div class="description-item_img"><img class="img-fluid" src="assets/images/shop/shop_detail_img.png" alt="description image"></div>
+                                  <div class="description-item_img"><img class="img-fluid" src="/static/images/shop/shop_detail_img.png" alt="description image"></div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                   <div class="description-item_text">
-                                    <h2>Product information</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    <h2>推荐理由</h2>
+                                    <p>{{ food.shoperintro }}</p>
                                   </div>
                                 </div>
                               </div>
@@ -131,12 +147,12 @@
                             <div class="description-item_block">
                               <div class="row align-items-center">
                                 <div class="col-md-6">
-                                  <div class="description-item_img"><img class="img-fluid" src="assets/images/shop/shop_detail_img_2.png" alt="description image"></div>
+                                  <div class="description-item_img"><img class="img-fluid" src="/static/images/shop/shop_detail_img_2.png" alt="description image"></div>
                                 </div>
                                 <div class="col-md-6">
                                   <div class="description-item_text">
-                                    <h2>An incredible view</h2>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                                    <h2>专家推荐</h2>
+                                    <p>{{ food.exintro }}</p>
                                   </div>
                                 </div>
                               </div>
@@ -148,20 +164,20 @@
                             <table class="shop_attributes table-bordered">
                               <tbody>
                                 <tr>
-                                  <th>Weight</th>
-                                  <td class="product_weight">10 oz</td>
+                                  <th>商品名</th>
+                                  <td class="product_weight">{{ food.name }}</td>
                                 </tr>
                                 <tr>
-                                  <th>Dimensions</th>
-                                  <td class="product_dimensions">15 × 12 × 20 in</td>
+                                  <th>商品标签</th>
+                                  <td class="product_dimensions">{{ food.tags.first }}</td>
                                 </tr>
                                 <tr>
-                                  <th>Color</th>
-                                  <td class="product_color">Black, Blue, Gray, Green</td>
+                                  <th>商品颜色</th>
+                                  <td class="product_color">{{ food.color }}</td>
                                 </tr>
                                 <tr>
-                                  <th>Size</th>
-                                  <td class="product_size">L, M, S, XL</td>
+                                  <th>商品简介</th>
+                                  <td class="product_size">{{ food.intro }}</td>
                                 </tr>
                               </tbody>
                             </table>
@@ -173,7 +189,7 @@
                               <div class="row">
                                 <div class="col-12 col-sm-3 col-lg-2">
                                   <div class="customer-review_left">
-                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_01.png" alt="customer image"></div>
+                                    <div class="customer-review_img text-center"><img class="img-fluid" src="/static/images/shop/reviewer_01.png" alt="customer image"></div>
                                     <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
                                   </div>
                                 </div>
@@ -190,7 +206,7 @@
                               <div class="row">
                                 <div class="col-12 col-sm-3 col-lg-2">
                                   <div class="customer-review_left">
-                                    <div class="customer-review_img text-center"><img class="img-fluid" src="assets/images/shop/reviewer_02.png" alt="customer image"></div>
+                                    <div class="customer-review_img text-center"><img class="img-fluid" src="/static/images/shop/reviewer_02.png" alt="customer image"></div>
                                     <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
                                   </div>
                                 </div>

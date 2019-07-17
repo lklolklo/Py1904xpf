@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PollsUser,Foods,Ads
+from .models import *
 # Register your models here.
 
 
@@ -11,5 +11,6 @@ class FoodsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(PollsUser)
+admin.site.register(Tag)
+admin.site.register(Color)
 admin.site.register(Foods)
-admin.site.register(Ads)

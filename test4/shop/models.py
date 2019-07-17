@@ -9,11 +9,25 @@ class PollsUser(User):
     def __str__(self):
         return self.username
 
+class Tag(models.Model):
+    title = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.title
+
+class Color(models.Model):
+    title = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.title
+
 class Foods(models.Model):
     name = models.CharField(max_length=20)
-    price = models.IntegerField(default=0)
-    tag = models.CharField(max_length=10)
-    color = models.CharField(max_length=5)
+    price1 = models.IntegerField(default=0)
+    price2 = models.IntegerField(default=0)
+    # tag  = models.ManyToManyField(Tag)
+    tags = models.ManyToManyField(Tag)
+    color = models.ForeignKey(Color,on_delete=models.CASCADE)
     intro = models.CharField(max_length=50)#简介
     shoperintro = models.CharField(max_length=50)#商家介绍
     exintro = models.CharField(max_length=50)#专家评价
@@ -24,6 +38,3 @@ class Foods(models.Model):
     def __str__(self):
         return self.name
 
-class Ads(models.Model):
-    img = models.ImageField(upload_to="ads")
-    food = models.ForeignKey(Foods,on_delete=models.CASCADE)
