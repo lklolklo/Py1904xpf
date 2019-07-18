@@ -24,5 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url("",include("shop.urls",namespace="shop")),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
-    url(r'^search/', include('haystack.urls')),
+    url(r'search/', include('haystack.urls')),
 ]

@@ -1,0 +1,100 @@
+﻿{% extends 'shop/base.html' %}
+
+{% load my_func %}
+
+{% block title %}
+<title>顾客订单</title>
+{% endblock %}
+
+{% block left %}
+
+
+
+      <div class="ogami-breadcrumb">
+        <div class="container">
+          <ul>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:index' %}"> <i class="fas fa-home"></i>Home</a></li>
+            <li> <a class="breadcrumb-link" href="{% url 'shop:list' %}">Shop</a></li>
+            <li> <a class="breadcrumb-link active" href="#">order</a></li>
+          </ul>
+        </div>
+      </div>
+      <!-- End breadcrumb-->
+
+
+      <div class="shopping-cart">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div class="product-table">
+
+                {% if o1 %}
+                <h1>{{request.user}}的订单</h1>
+                {% for o in order1 %}
+                <br>
+                <br>
+                <table class="table table-responsive"> 
+                  <colgroup>
+                    <col span="1" style="width: 15%">
+                    <col span="1" style="width: 30%">
+                    <col span="1" style="width: 15%">
+                    <col span="1" style="width: 15%">
+                    <col span="1" style="width: 15%">
+                    <col span="1" style="width: 10%">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th class="product-iamge" scope="col">商品图片</th>
+                      <th class="product-name" scope="col">商品名称</th>
+                      <th class="product-price" scope="col">商品单价</th>
+                      <th class="product-quantity" scope="col">商品数量</th>
+                      <th class="product-total" scope="col">商品总价</th>
+
+                    </tr>
+                  </thead>
+
+
+                  <tbody>
+                    {% for i in o.order2_set.all %}
+
+                    <tr>
+                      <td class="product-iamge"> 
+                        <div class="img-wrapper"><img src="/media/{{ i.food.img1 }}" alt="product image"></div>
+                      </td>
+                      <td class="product-name">{{ i.food.name }}</td>
+                      <td class="product-price">{{ i.food.price2 }}</td>
+                      <td class="product-price">{{i.number}}</td>
+                      <td class="product-total">{{i.total}}</td>
+
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+
+
+
+                </table>
+
+                <div class="col-12 text-left">
+                  <p class="normal-btn black cart-update">订单总价{{o.total}}</p>
+                  <p class="normal-btn black cart-update">订单时间{{o.time}}</p>
+                </div>
+
+                {% endfor %}
+
+                {% else %}
+                <h1>没有订单</h1>
+                {% endif %}
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- End shopping cart-->
+
+
+
+
+
+{% endblock %}

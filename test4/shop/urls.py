@@ -17,4 +17,10 @@ urlpatterns = [
     url(r'^about_us/$',views.about_us,name="about_us"),
     url(r'^colors/(\d+)/$',views.colors,name="colors"),
     url(r'^tags/(\d+)/$',views.tags,name="tags"),
+    url(r'^incart/(\d+)/$',views.incart,name="incart"),
+    url(r'^cart/$',views.cart,name="cart"),
+    url(r'^number/(\d+)/$',views.number,name="number"),
+    url(r'^delfood/(\d+)/$',views.delfood,name="delfood"),
+    url(r'^inorder/$',views.inorder,name="inorder"),
+    url(r'^order/$',views.order,name="order"),
 ]

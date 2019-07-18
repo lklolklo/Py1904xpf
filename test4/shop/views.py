@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,reverse,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from .models import *
 from django.contrib.auth import login as lgi ,logout as lgo,authenticate
 from .forms import *
@@ -40,6 +40,8 @@ def list(request):
     page = getpage(request,foods,3)
     return render(request,"shop/list.html",locals())
 
+
+@checklogin
 def detail(request,id):
     food = Foods.objects.get(pk=id)
     return render(request,"shop/detail.html",locals())
@@ -203,3 +205,121 @@ def tags(request,id):
 
 
 
+def incart(request,id):
+    userid = request.user.id
+    user = PollsUser.objects.get(pk=userid)
+    food = Foods.objects.get(pk=id)
+    print(user)
+    print(food)
+    carts = Cart.objects.filter(user=user, foods=food).first()
+    print(carts, type(carts))
+    if carts:
+        s = request.GET.get("number")
+        s = int(s)
+        carts.number += s
+        carts.save()
+        return redirect(reverse("shop:cart"))
+    else:
+        cart = Cart()
+        cart.user = user
+        cart.foods = food
+        s = request.GET.get("number")
+        s = int(s)
+        cart.number = s
+        print(s,type(s))
+        cart.save()
+        return redirect(reverse("shop:cart"))
+
+@checklogin
+def cart(request):
+    user = PollsUser.objects.get(pk=request.user.id)
+    print(user)
+    carts = user.cart_set.all()
+
+    c1 = carts.first()
+
+    total = 0
+    for c in carts:
+        c.total = c.foods.price2 * c.number
+        total += c.total
+
+    return render(request,'shop/cart.html',locals())
+
+
+def number(request,id):
+    number = request.POST.get("number")
+    print(number)
+    user = PollsUser.objects.get(pk=request.user.id)
+    print(user)
+    food = Foods.objects.get(pk=id)
+    print(food)
+
+    nowtotal = request.POST.get("nowtotal")
+
+    carts = Cart.objects.filter(user=user, foods=food).first()
+    print(carts,type(carts))
+
+    nowtotal = int(nowtotal) - carts.number*carts.foods.price2
+
+    carts.number = int(number)
+    total = int(number)*carts.foods.price2
+    print(total)
+
+    nowtotal += total
+
+    carts.save()
+
+
+    return JsonResponse({"total":total,"nowtotal":nowtotal})
+
+
+
+def delfood(request,id):
+    user = PollsUser.objects.get(pk=request.user.id)
+    print(user)
+    food = Foods.objects.get(pk=id)
+    print(food)
+    Cart.objects.get(user=user,foods=food).delete()
+    return JsonResponse({"number": "111"})
+
+
+def inorder(request):
+    user = PollsUser.objects.get(pk=request.user.id)
+
+    o1 = Order1()
+    o1.user = user
+    o1.save()
+
+    carts = user.cart_set.all()
+
+    nowtotal = 0
+    for c in carts:
+        c.id = Order2()
+        c.id.order = o1
+        c.id.food = c.foods
+        c.id.number = c.number
+
+        total = c.number*c.foods.price2
+
+        nowtotal += total
+        c.id.total = total
+
+        c.id.save()
+
+    user.cart_set.all().delete()
+
+    o1.total = nowtotal
+    o1.save()
+
+    return redirect(reverse("shop:order"))
+
+
+@checklogin
+def order(request):
+    user = PollsUser.objects.get(pk=request.user.id)
+
+    order1 = user.order1_set.all()
+
+    o1 = order1.first()
+
+    return render(request,"shop/order.html",locals())

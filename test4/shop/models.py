@@ -38,3 +38,29 @@ class Foods(models.Model):
     def __str__(self):
         return self.name
 
+
+class Cart(models.Model):
+    user = models.ForeignKey(PollsUser,on_delete=models.CASCADE)
+    foods = models.ForeignKey(Foods,on_delete=models.CASCADE,default=0)
+    number = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+
+
+class Order1(models.Model):
+    user = models.ForeignKey(PollsUser,on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
+    total = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.user.username
+
+class Order2(models.Model):
+    order = models.ForeignKey(Order1,on_delete=models.CASCADE)
+    food = models.ForeignKey(Foods,on_delete=models.CASCADE)
+    number = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.food.name
