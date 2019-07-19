@@ -216,7 +216,7 @@ def tags(request,id):
     return render(request,'shop/list.html',locals())
 
 
-
+@checklogin
 def incart(request,id):
     userid = request.user.id
     user = PollsUser.objects.get(pk=userid)
@@ -291,11 +291,17 @@ def delfood(request,id):
     print(user)
     food = Foods.objects.get(pk=id)
     print(food)
-    Cart.objects.get(user=user,foods=food).delete()
+
+    # print("%%%%%%%%%%%%%")
+    print(Cart.objects.filter(user=user,foods=food))
+    Cart.objects.filter(user=user,foods=food).delete()
+
+
     return JsonResponse({"number": "111"})
 
 
 def inorder(request):
+    # print('inore')
     user = PollsUser.objects.get(pk=request.user.id)
 
     o1 = Order1()
