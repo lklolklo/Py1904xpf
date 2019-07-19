@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^delfood/(\d+)/$',views.delfood,name="delfood"),
     url(r'^inorder/$',views.inorder,name="inorder"),
     url(r'^order/$',views.order,name="order"),
+    url(r'^addcomment/(\d+)/$',views.addcomment,name="addcomment"),
 ]

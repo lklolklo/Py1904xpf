@@ -153,37 +153,37 @@
 
                     </div>
                   </div>
-                  <div class="shop-pagination">
-                    <ul>
-                      {% if page.has_previous %}
-                      <li class="no-round-btn smooth"><a href="?page={{ page.previous_page_number }}">上一页</a></li>
-                      {% endif %}
+                  <!--<div class="shop-pagination">-->
+                    <!--<ul>-->
+                      <!--{% if page.has_previous %}-->
+                      <!--<li class="no-round-btn smooth"><a href="?page={{ page.previous_page_number }}">上一页</a></li>-->
+                      <!--{% endif %}-->
 
-                      {% for i in page.paginator.page_range %}
-                          {% if i == page.number %}
-                          <li class="no-round-btn smooth active" style="background-color: #22bb22"><a href="?page={{i}}">{{ i }}</a></li>
-                          {% else %}
-                          <li class="no-round-btn smooth"><a href="?page={{i}}">{{ i }}</a></li>
-                          {% endif %}
-                      {% endfor %}
+                      <!--{% for i in page.paginator.page_range %}-->
+                          <!--{% if i == page.number %}-->
+                          <!--<li class="no-round-btn smooth active" style="background-color: #22bb22"><a href="?page={{i}}">{{ i }}</a></li>-->
+                          <!--{% else %}-->
+                          <!--<li class="no-round-btn smooth"><a href="?page={{i}}">{{ i }}</a></li>-->
+                          <!--{% endif %}-->
+                      <!--{% endfor %}-->
 
-                      <!--<li>-->
-                        <!--<button class="no-round-btn smooth active">1</button>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<button class="no-round-btn smooth">2</button>-->
-                      <!--</li>-->
-                      <!--<li>-->
-                        <!--<button class="no-round-btn smooth">3</button>-->
-                      <!--</li>-->
-                      {% if page.has_next %}
-                      <li class="no-round-btn smooth"><a href="?page={{ page.next_page_number }}">下一页</a></li>
-                      {% endif %}
-                      <!--<li>-->
-                        <!--<button class="no-round-btn smooth"> <i class="arrow_carrot-2right"></i></button>-->
-                      <!--</li>-->
-                    </ul>
-                  </div>
+                      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="no-round-btn smooth active">1</button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="no-round-btn smooth">2</button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="no-round-btn smooth">3</button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                      <!--{% if page.has_next %}-->
+                      <!--<li class="no-round-btn smooth"><a href="?page={{ page.next_page_number }}">下一页</a></li>-->
+                      <!--{% endif %}-->
+                      <!--&lt;!&ndash;<li>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button class="no-round-btn smooth"> <i class="arrow_carrot-2right"></i></button>&ndash;&gt;-->
+                      <!--&lt;!&ndash;</li>&ndash;&gt;-->
+                    <!--</ul>-->
+                  <!--</div>-->
                 </div>
               </div>
             </div>

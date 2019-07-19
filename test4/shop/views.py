@@ -37,13 +37,25 @@ def index(request):
 def list(request):
     foods = Foods.objects.all()
 
-    page = getpage(request,foods,3)
+    page = getpage(request,foods,6)
     return render(request,"shop/list.html",locals())
 
 
 @checklogin
 def detail(request,id):
     food = Foods.objects.get(pk=id)
+
+    comment = food.comment_set.all()
+
+    user = PollsUser.objects.get(pk=request.user.id)
+
+    c = Order1.objects.filter(user=user)
+
+    list = []
+    for i in c:
+        if Order2.objects.filter(order=i, food=food).first():
+            list.append(i)
+
     return render(request,"shop/detail.html",locals())
 
 def login(request):
@@ -323,3 +335,15 @@ def order(request):
     o1 = order1.first()
 
     return render(request,"shop/order.html",locals())
+
+
+def addcomment(request,id):
+    user = PollsUser.objects.get(pk=request.user.id)
+    food = Foods.objects.get(pk=id)
+    comment = Comment()
+    comment.user = user
+    comment.food = food
+    comment.content = request.POST.get("content")
+    comment.save()
+
+    return redirect(reverse("shop:detail",args=(id,)))

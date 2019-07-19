@@ -194,68 +194,61 @@
                         </div>
                         <div id="tab-3"> 
                           <div class="customer-reviews_block">
+
+                            {% for c in comment %}
+
                             <div class="customer-review">
                               <div class="row">
                                 <div class="col-12 col-sm-3 col-lg-2">
                                   <div class="customer-review_left">
-                                    <div class="customer-review_img text-center"><img class="img-fluid" src="/static/images/shop/reviewer_01.png" alt="customer image"></div>
-                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
+                                    <div class="customer-review_img text-center"><img class="img-fluid" src="/static/images/shop/1.jpeg" alt="customer image"></div>
+                                    <div class="customer-rate"></div>
                                   </div>
                                 </div>
                                 <div class="col-12 col-sm-9 col-lg-10">
-                                  <div class="customer-comment"> 
-                                    <h5 class="comment-date">27 Aug 2016</h5>
-                                    <h3 class="customer-name">Jenney Kelley</h3>
-                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
+                                  <div class="customer-comment">
+                                    <h5 class="comment-date">评论时间{{ c.time }}</h5>
+                                    <h3 class="customer-name">{{ c.user.username }}</h3>
+                                    <p class="customer-commented">{{ c.content }}</p>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                            <div class="customer-review">
-                              <div class="row">
-                                <div class="col-12 col-sm-3 col-lg-2">
-                                  <div class="customer-review_left">
-                                    <div class="customer-review_img text-center"><img class="img-fluid" src="/static/images/shop/reviewer_02.png" alt="customer image"></div>
-                                    <div class="customer-rate"><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star-half"></i></div>
-                                  </div>
-                                </div>
-                                <div class="col-12 col-sm-9 col-lg-10">
-                                  <div class="customer-comment"> 
-                                    <h5 class="comment-date">27 Aug 2016</h5>
-                                    <h3 class="customer-name">Jenney Kelley</h3>
-                                    <p class="customer-commented">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna alation uidem dolore eu fugiat nulla pariatur. </p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+
+                            {% endfor %}
+
+
+                            {% if list %}
+
                             <div class="add-review">
                               <div class="add-review_top">
-                                <h2>Add Review</h2>
+                                <h2>添加评论</h2>
                               </div>
                               <div class="add-review_bottom">
-                                <form action="" method="post">
+
+                                <form action="{% url 'shop:addcomment' food.id %}" method="post">
+                                  {% csrf_token %}
                                   <div class="row">
-                                    <div class="col-12 col-md-6">
-                                      <input class="no-round-input" type="text" placeholder="Name*">
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                      <input class="no-round-input" type="text" placeholder="Email*">
+
+                                    <div class="col-12">
+
                                     </div>
                                     <div class="col-12">
-                                      <div class="rating">
-                                        <h5>Your rating:</h5><span><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i><i class="icon_star"></i></span>
-                                      </div>
+                                      <textarea class="textarea-form" id="review" name="content" cols="30" rows="4" placeholder="评论内容"></textarea>
                                     </div>
                                     <div class="col-12">
-                                      <textarea class="textarea-form" id="review" name="" cols="30" rows="4" placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                      <button class="normal-btn">Submit Review</button>
+                                      <button type="submit" class="normal-btn">添加评论</button>
                                     </div>
                                   </div>
                                 </form>
+
                               </div>
                             </div>
+                            {% else %}
+                            <h2>未购买，无法评论</h2>
+                            {% endif %}
+
+
                           </div>
                         </div>
                       </div>

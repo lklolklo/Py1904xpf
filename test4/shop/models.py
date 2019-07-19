@@ -64,3 +64,11 @@ class Order2(models.Model):
 
     def __str__(self):
         return self.food.name
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(PollsUser,on_delete=models.CASCADE)
+    food = models.ForeignKey(Foods,on_delete=models.CASCADE)
+    time = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+
